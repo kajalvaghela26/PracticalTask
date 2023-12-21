@@ -11,6 +11,7 @@ const HomePage = () => {
   const [correctAns, setCorrectAns] = useState([]);
   const [disableBtn, setDisableBtn] = useState(false);
   const [inCorrectAns, setInCorrectAns] = useState([]);
+  const [response, setResponse] = useState("");
   const history = useNavigate();
   const callApi = async () => {
     try {
@@ -46,10 +47,20 @@ const HomePage = () => {
     setRalAns(data);
     const update = { ...ansValue, [`ans${count}`]: e.target.value };
     setAnsValue(update);
+    if (e.target.value === data.correct_answer) {
+      setResponse("Correct");
+    } else {
+      setResponse(
+        `Your Answer is Wrong Right Answer is:${data.correct_answer}`
+      );
+    }
   };
   const handleSubmit = () => {
     let lastValue;
-    setCount(count + 1);
+    setTimeout(() => {
+      setCount(count + 1);
+      setResponse("");
+    }, 3000);
     const Value = Object.keys(ansValue);
     setDisableBtn(false);
     if (Value && Value.length > 0) {
@@ -70,29 +81,22 @@ const HomePage = () => {
           const cunt = index + 1;
           if (cunt === count) {
             return (
-              <QuestionAns
-                data={el}
-                setCount={setCount}
-                count={count}
-                handleAns={handleAns}
-              />
+              <div key={index}>
+                <QuestionAns
+                  data={el}
+                  setCount={setCount}
+                  count={count}
+                  handleAns={handleAns}
+                />
+              </div>
             );
           }
         })}
+      <div>
+        <span>{response}</span>
+      </div>
       <div className="btn-prent">
-        <div className="btn-child-l">
-          {count !== 1 && (
-            <>
-              <Button
-                variant="dark"
-                className="btn-chld"
-                onClick={() => setCount(count - 1)}
-              >
-                Back
-              </Button>
-            </>
-          )}
-        </div>
+        <div className="btn-child-l"></div>
         <div className="btn-child-r">
           <Button
             variant="dark"

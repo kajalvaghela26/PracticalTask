@@ -14,46 +14,42 @@ const QuestionAns = ({ data, handleAns }) => {
     switch (data.type) {
       case "multiple":
         return (
-          <Form>
-            <Form.Group
-              controlId="exampleForm.SelectCustom"
-              className="option-ui"
-            >
-              <Form.Label>Select an option:</Form.Label>
-              <Form.Select onChange={(e) => handleAns(e, data)}>
-                <option value="">Select an option</option>
-                {options.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-          </Form>
+          <Form.Group
+            controlId="exampleForm.SelectCustom"
+            className="option-ui"
+          >
+            <Form.Label>Select an option:</Form.Label>
+            <Form.Select onChange={(e) => handleAns(e, data)}>
+              <option value="">Select an option</option>
+              {options.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
         );
 
       case "boolean":
         return (
-          <Form>
+          <>
             <Form.Check
               inline
               label="True"
-              value={true}
+              value="True"
               name="group1"
               type="radio"
               onChange={(e) => handleAns(e, data)}
-              // id={`inline-${type}-1`}
             />
             <Form.Check
               inline
               label="False"
-              value={false}
+              value="False"
               name="group1"
               type="radio"
               onChange={(e) => handleAns(e, data)}
-              // id={`inline-${type}-2`}
             />
-          </Form>
+          </>
         );
       default:
         return false;
